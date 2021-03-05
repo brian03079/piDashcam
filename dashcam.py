@@ -1,4 +1,5 @@
 #This dashcam script is a modified version of https://github.com/bnbe-club/rpi-dashcam-v1-diy-e38/blob/master/diy-e38/dashcam.py
+#designed to work with the pijuice UPS hat
 
 
 import picamera
@@ -81,7 +82,7 @@ def shutdown_pi(delay):
 		print("Shutting down in %d seconds" % delay, end="\r", flush=True)
 		time.sleep(1)
 		delay -= 1
-		
+	
 	os.system("sudo shutdown -h now")
 	#sys.exit()
 	
@@ -136,6 +137,8 @@ def start_pi_dashcam():
 						print('Power disconnected! Automatic shutdown in %d seconds' % (SHUTDOWN_DELAY + FINAL_DELAY), end="\n")
 					elif(datetime.datetime.now() >= shutdown_time):
 						camera.stop_recording()
+						pijuice.rtcAlarm.SetWakeupEnabled(True)
+						pijuice.power.SetWakeUpOnCharge(0)
 						shutdown_pi(FINAL_DELAY)
 				#elif(power_status == AC_ON and ac_disconnected == True):
 				#	print('Power restored! Shutdown cancelled.')
