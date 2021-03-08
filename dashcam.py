@@ -83,6 +83,8 @@ def shutdown_pi(delay):
 		time.sleep(1)
 		delay -= 1
 	
+	pijuice.rtcAlarm.SetWakeupEnabled(True)
+	pijuice.power.SetWakeUpOnCharge(0)
 	os.system("sudo shutdown -h now")
 	#sys.exit()
 	
@@ -137,8 +139,8 @@ def start_pi_dashcam():
 						print('Power disconnected! Automatic shutdown in %d seconds' % (SHUTDOWN_DELAY + FINAL_DELAY), end="\n")
 					elif(datetime.datetime.now() >= shutdown_time):
 						camera.stop_recording()
-						pijuice.rtcAlarm.SetWakeupEnabled(True)
-						pijuice.power.SetWakeUpOnCharge(0)
+						camera.stop_preview()
+						
 						shutdown_pi(FINAL_DELAY)
 				#elif(power_status == AC_ON and ac_disconnected == True):
 				#	print('Power restored! Shutdown cancelled.')
