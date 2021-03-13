@@ -21,7 +21,7 @@ from subprocess import call
 pijuice = PiJuice(1, 0x14) # Instantiate PiJuice interface object
 
 DURATION = 30
-SHUTDOWN_DELAY = 10
+SHUTDOWN_DELAY = 5
 FINAL_DELAY = 5
 
 SPACE_LIMIT = 85
